@@ -1,0 +1,16 @@
+# Edit these to point at the correct upstreams
+git_repos:
+  - name: sunnypilot
+    url: https://github.com/sunnyhaibin/sunnypilot
+    branch: chubbs-ssh-only
+
+docs:
+  - name: sunnypilot-wiki
+    url: https://github.com/sunnyhaibin/sunnypilot/wiki
+    type: github_wiki
+
+web_pages:
+  - https://github.com/sunnyhaibin/sunnypilot/releases
+
+# Optional: include relevant openpilot references for context when needed
+context_repos: https://github.com/commaai/openpilot

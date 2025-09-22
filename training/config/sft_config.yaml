@@ -1,0 +1,50 @@
+# PEFT LoRA config for gpt-oss-20b (Unsloth BnB 4-bit)
+# Matches your repo’s data path produced by sft_prepare.py -> training/sft_data.jsonl
+
+# ----- Model & tokenizer -----
+model_name_or_path: "D:\\gptoss20b4bit"   # your local Unsloth BnB-4bit checkpoint
+tokenizer_name_or_path: "D:\\gptoss20b4bit"
+trust_remote_code: true
+
+# ----- Dataset (from your scripts) -----
+dataset_path: "training/sft_data.jsonl"   # <- stays exactly here
+
+# ----- Output -----
+output_dir: "outputs/lora-sunnypilot"     # keep your original folder name
+
+# ----- Training schedule -----
+num_train_epochs: 1
+per_device_train_batch_size: 1            # 1 per GPU => 2 total with --num_processes=2
+gradient_accumulation_steps: 16
+learning_rate: 1e-4
+save_steps: 500
+logging_steps: 50
+lr_scheduler_type: cosine
+warmup_ratio: 0.05
+
+# ----- Precision / quant -----
+# You’re using an Unsloth BnB-4bit base, so keep BnB on.
+load_in_4bit: true
+load_in_8bit: false
+bnb_4bit_quant_type: nf4
+bnb_4bit_compute_dtype: float16
+bnb_4bit_use_double_quant: true
+dtype: float16
+bf16: false
+fp16: true
+
+# ----- LoRA -----
+use_lora: true
+lora_r: 16
+lora_alpha: 32
+lora_dropout: 0.05
+lora_target_modules: ["q_proj","v_proj","k_proj","o_proj","gate_proj","up_proj","down_proj"]
+
+# ----- Sequence length -----
+max_seq_length: 2048
+
+# ----- System / misc -----
+gradient_checkpointing: true
+dataloader_num_workers: 0
+device_map: "auto"
+report_to: []
